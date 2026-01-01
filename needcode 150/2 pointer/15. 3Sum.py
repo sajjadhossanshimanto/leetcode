@@ -65,6 +65,36 @@ s = Solution()
 s.threeSum(nums = [-1,0,1,2,-1,-4])
 # [[-1,-1,2],[-1,0,1]] 
 # %%
-# TODO: not solved yet
 s.threeSum([0, 0, 0])
 # %%
+class Solution:
+    def threeSum(self, arr: list[int]) -> list[list[int]]:
+        arr.sort()
+        n = len(arr)
+        ans = []
+        for i in range(n):
+            if i > 0 and arr[i] == arr[i - 1]:
+                continue
+
+            # applying 2 pointer for `i+1` to `last`
+            j, k = i + 1, n - 1
+            while(j<k):
+                sum = arr[i]+arr[j]+arr[k]
+                if sum ==0:
+                    ans.append([arr[i], arr[j], arr[k]])
+                    j+=1
+                    k-=1
+
+                    # removing dublicates
+                    while j<k and arr[j] == arr[j-1] :
+                        j+=1
+                    
+                    while j<k and arr[k] == arr[k+1]:
+                        k-=1
+                # optimisation logic: 2 pointer in sorted array 
+                elif sum > 0:
+                    k-=1
+                else:
+                    j+=1
+        return ans
+
