@@ -50,6 +50,11 @@ class Solution:
                 if ele in sum_dict and sum_dict[ele]>j:
                     ans.append([nums[i], nums[j], ele])
                     # sum_dict.pop(ele)# ensure no dublicates# poping the element will break the algo 
+                '''
+                no need to skip duplicates for k. if i and j is unique k will be unnique
+                    nums[k] = -(nums[i] + nums[j])
+                '''
+                
                 # for k in range(j+1, len(nums)):
                     # if nums[i]+nums[j]+nums[k] == 0:
                     # ans.append([nums[i], nums[j], nums[k]])
