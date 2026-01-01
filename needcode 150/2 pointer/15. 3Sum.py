@@ -34,7 +34,7 @@ class Solution:
 #%%
 class Solution:
     def threeSum(self, nums: list[int]) -> list[list[int]]:
-        nums = sorted(set(nums))
+        nums = sorted((nums))
 
         sum_dict = {}
         for i in range(len(nums)):
@@ -43,14 +43,23 @@ class Solution:
 
         ans = []
         for i in range(len(nums)):
+            if i>0 and nums[i]==nums[i-1]: continue
             for j in range(i+1, len(nums)):
+                if j-1>i and nums[j-1]==nums[j]: continue
                 ele = -(nums[i]+nums[j])
-                if ele in sum_dict:
+                if ele in sum_dict and sum_dict[ele]>j:
                     ans.append([nums[i], nums[j], ele])
+                    # sum_dict.pop(ele)# ensure no dublicates# poping the element will break the algo 
+                # for k in range(j+1, len(nums)):
+                    # if nums[i]+nums[j]+nums[k] == 0:
+                    # ans.append([nums[i], nums[j], nums[k]])
         return ans
 
 s = Solution()
 # %%
 s.threeSum(nums = [-1,0,1,2,-1,-4])
 # [[-1,-1,2],[-1,0,1]] 
+# %%
+# TODO: not solved yet
+s.threeSum([0, 0, 0])
 # %%
