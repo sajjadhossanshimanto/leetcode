@@ -1,9 +1,11 @@
 #%%
+from typing import Optional
+
 # Definition for singly-linked list.
-# class ListNode:
-#     def __init__(self, val=0, next=None):
-#         self.val = val
-#         self.next = next
+class ListNode:
+    def __init__(self, val=0, next=None):
+        self.val = val
+        self.next = next
 
 class Solution:
     def addTwoNumbers(self, l1: Optional[ListNode], l2: Optional[ListNode]) -> Optional[ListNode]:
@@ -115,3 +117,41 @@ class Solution:
             l1 = zero_node
         # all these course just to make 2 link list in equal length!!!
         #  and now i can use the recurstion method
+#%%
+'''
+i misunderstood the problem
+what reverse order actually ment : 3456 + 789
+would be given as 6 (head) -> 5 -> 4-> 3 
+which actually helps !
+'''
+
+class Solution:
+    def addTwoNumbers(self, l1: Optional[ListNode], l2: Optional[ListNode]) -> Optional[ListNode]:
+        ListNode = type(l1)
+
+        def adder(l1, l2, carry=0):
+            v1 = l1.val
+            v2 = l2.val
+
+            total = v1+v2+carry
+            l1.val = total%10
+            carry = total//10
+            if l1.next and l2.next:
+                adder(l1.next, l2.next, carry)
+            elif carry:
+                if l1.next:
+                    adder(l1.next, ListNode(carry), 0)
+                elif l2.next:
+                    l1.next = ListNode(carry)
+                    adder(l1.next, l2.next, 0)
+                else:
+                    l1.next = ListNode(carry)
+            elif l2.next:# carry is zero but l2 present
+                l1.next = l2.next
+
+
+        adder(l1, l2)
+        return l1
+
+s = Solution()
+# %%
