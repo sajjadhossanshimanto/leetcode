@@ -45,20 +45,26 @@ class Linklist:
 
     def remove(self, node):
         # func is actually faulty. no verification either the node from the link list    
-        if node.next==None and node.previous==None:# last value
+        if node==self.head and node==self.tail:# last value
             self.head = self.tail = None
-        elif node.next==None:# tail
+        elif node==self.tail:# tail
             self.tail = node.previous
-            self.tail.next = None
-        elif node.previous==None:# head
+            if self.tail:
+                self.tail.next = None
+        elif node==self.head:# head
             self.head = node.next
-            self.head.previous = None
+            if self.head: 
+                self.head.previous = None
         else: # middle of link list
             node.previous.next = node.next
             node.next.previous = node.previous
+        
+        node.next = node.previous = None
 
 
     def shift_head(self, node):
+        if node == self.head: return 
+
         # 1st remove the node 
         self.remove(node)
         if self.head:
@@ -91,9 +97,16 @@ class LRUCache:
         return -1
 
     def put(self, key: int, value: int) -> None:
+        if key in self.cache:
+            node = self.cache[key]
+            node.val = value
+            self.key_order.shift_head(node)
+            return 
+        
         if len(self.cache) >= self.capacity:
             pop_key = self.key_order.pop()
-            self.cache.pop(pop_key)
+            if pop_key is not None:
+                self.cache.pop(pop_key)
 
         node = Node(key, value)
         self.cache[key] = node
