@@ -3,13 +3,13 @@ from collections import deque
 
 
 class Node:
-    def __init__(self, key, val, next=None, previous=None):
+    def __init__(self, key, val, next=None, prev=None):
         self.key = key
         self.val = val
         self.next = next
-        self.previous = previous
+        self.prev = prev
 
-class Linklist:
+class LinkedList:
     def __init__(self):
         self.head = None
         self.tail = None
@@ -18,7 +18,7 @@ class Linklist:
         if self.tail is None:
             self.head = self.tail = node
         else:
-            node.previous = self.tail
+            node.prev = self.tail
             self.tail.next = node
             self.tail = node
 
@@ -27,7 +27,7 @@ class Linklist:
         if not self.head:
             self.head = self.tail = node
         else:
-            self.head.previous = node
+            self.head.prev = node
             self.head = node
         
 
@@ -39,7 +39,7 @@ class Linklist:
             return
         
         key = self.tail.key
-        self.tail = self.tail.previous
+        self.tail = self.tail.prev
         self.tail.next = None
         return key
 
@@ -48,18 +48,18 @@ class Linklist:
         if node==self.head and node==self.tail:# last value
             self.head = self.tail = None
         elif node==self.tail:# tail
-            self.tail = node.previous
+            self.tail = node.prev
             if self.tail:
                 self.tail.next = None
         elif node==self.head:# head
             self.head = node.next
             if self.head: 
-                self.head.previous = None
+                self.head.prev = None
         else: # middle of link list
-            node.previous.next = node.next
-            node.next.previous = node.previous
+            node.prev.next = node.next
+            node.next.prev = node.prev
         
-        node.next = node.previous = None
+        node.next = node.prev = None
 
 
     def shift_head(self, node):
@@ -68,9 +68,9 @@ class Linklist:
         # 1st remove the node 
         self.remove(node)
         if self.head:
-            self.head.previous = node
+            self.head.prev = node
             node.next = self.head
-            node.previous = None
+            node.prev = None
 
         self.head = node
 
@@ -87,7 +87,7 @@ class LRUCache:
     def __init__(self, capacity: int):
         self.capacity = capacity
         self.cache = {}
-        self.key_order = Linklist()
+        self.key_order = LinkedList()
 
     def get(self, key: int) -> int:
         if key in self.cache:
