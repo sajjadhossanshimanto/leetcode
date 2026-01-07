@@ -35,8 +35,9 @@ class LinkedList:
         if not self.tail:
             return 
         if self.head == self.tail:
+            key = self.head.key
             self.head = self.tail = None
-            return
+            return key
         
         key = self.tail.key
         self.tail = self.tail.prev
@@ -114,8 +115,8 @@ class LRUCache:
         self.key_order.appendleft(node)
         # self.key_order.shift_head(node)
 
-obj = LRUCache(2)
 #%%
+obj = LRUCache(2)
 # Your LRUCache object will be instantiated and called as such:
 obj.put(1, 1)
 obj.put(2, 2)
@@ -133,4 +134,14 @@ param_1 = obj.get()
 [null,null,null,1,null,-1,null,1,-1,4]
 for k, v in obj.cache.items():
     print(f"{k} -> {v.val}")
+# %%
+["LRUCache","put","get","put","get","get"]
+[[1],[2,1],[2],[3,2],[2],[3]]
+obj = LRUCache(1)
+
+obj.put(2, 1)
+obj.get(2)
+obj.put(3, 2)
+obj.get(2)
+obj.get(3)
 # %%
