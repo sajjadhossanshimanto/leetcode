@@ -34,3 +34,8 @@ class Solution:
             fast = nums[fast]
             if slow==fast:
                 return slow
+            """
+            https://youtu.be/PvrxZaH_eZ4?si=9lFMGzNqkpLCU8ul&t=586
+            loop is defined by : slow and fast will indicate to a same number. 
+            so dublicate is slow, not nums[slow]
+            """
